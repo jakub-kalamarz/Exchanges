@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol ExchangesFlow {
-    func coordinateToDetail(to currency: String)
-}
-
 class ExchangesDetailCoordinator: Coordinator {
     weak var navigationController: UINavigationController?
 
@@ -19,11 +15,10 @@ class ExchangesDetailCoordinator: Coordinator {
         }
 
         func start() {
+            let view = ExchangesDetailView()
+            let viewModel = ExchangesDetailViewModel()
+            view.viewModel = viewModel
+
+            navigationController?.pushViewController(view, animated: true)
         }
-}
-
-extension ExchangesDetailCoordinator: ExchangesFlow {
-    func coordinateToDetail(to currency: String) {
-
-    }
 }

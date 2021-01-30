@@ -8,6 +8,7 @@
 import UIKit
 
 class ExchangesDetailView: UIViewController {
+    var viewModel: ExchangesDetailViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -7,7 +7,13 @@
 
 import Foundation
 
-class Rates: Codable {
+struct Rates: Codable {
     let base: String
     let rates: [String: Double]
+}
+
+struct Rate {
+    let currency: String
+    let value: Double
+    var isFavorite: Bool = false
 }
