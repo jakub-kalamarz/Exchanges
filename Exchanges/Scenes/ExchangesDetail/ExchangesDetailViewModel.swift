@@ -6,11 +6,40 @@
 //
 
 import Foundation
+import Combine
 
 class ExchangesDetailViewModel {
-    @Published var base:String
+    var network: ExchangesApi
 
-    init(rate: Rate) {
-        self.base = rate.currency
+    @Published var symbol:String
+
+    @Published var data: [Rate] = [Rate]()
+
+    private var canncelables = Set<AnyCancellable>()
+
+    var title: String {
+        self.symbol
+    }
+
+    init(network: ExchangesApi = ExchangesApi(), rate: Rate) {
+        self.symbol = rate.currency
+        self.network = network
+
+        getRatesPeriod()
+    }
+
+    private func getRatesPeriod() {
+        network.getRatesPeriod(symbol: symbol)
+            .sink(receiveCompletion: { error in
+                print(error)
+            }, receiveValue: { value in
+                self.data = value.rates.map { data in
+                    let date = Calendar.current.getDateFromString(string: data.key)!
+                    let rate = data.value.values.first!
+                    let base = data.value.keys.first!
+                    return Rate(currency: base, value: rate, date: date)
+                }
+            })
+            .store(in: &canncelables)
     }
 }

@@ -39,7 +39,14 @@ class ExchangesListViewModel {
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { value in
-                self.data = value.rates.map { Rate(currency: $0.key, value: $0.value) }
+                var data = value.rates.map { Rate(currency: $0.key, value: $0.value) }
+                data.sort(by: { first, second in
+                    first.currency < second.currency
+                })
+                data.sort(by: { first, second in
+                    first.isFavorite && !second.isFavorite
+                })
+                self.data = data
                 self.state = .finishedLoading
             })
             .store(in: &canncelables)

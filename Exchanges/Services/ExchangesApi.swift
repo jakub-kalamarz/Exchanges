@@ -30,4 +30,16 @@ final class ExchangesApi {
             .decode(type: Rates.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }
+
+    func getRatesPeriod(symbol: String, base: Symbol = .PLN) -> AnyPublisher<CurrencyRates, Error> {
+        let today = Calendar.current.getToday()
+        let lastWeekMonday = Calendar.current.getLastWeekDay()
+
+        let url = URL(string: "https://api.exchangeratesapi.io/history?start_at=\(lastWeekMonday)&end_at=\(today)&symbols=\(symbol)&base=\(base)")!
+
+        return urlSession.dataTaskPublisher(for: url)
+            .map(\.data)
+            .decode(type: CurrencyRates.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+    }
 }
