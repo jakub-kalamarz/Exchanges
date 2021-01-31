@@ -36,7 +36,7 @@ class ExchangesListCoordinator: Coordinator {
 
 extension ExchangesListCoordinator: ExchangesFlow {
         func coordinateToDetail(to currency: Rate) {
-            let coordinator = ExchangesDetailCoordinator(navigationController: navigationController)
+            let coordinator = ExchangesDetailCoordinator(navigationController: navigationController, rate: currency)
             coordinate(to: coordinator)
         }
     }

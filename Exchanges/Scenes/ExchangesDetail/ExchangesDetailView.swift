@@ -14,4 +14,4 @@ class ExchangesDetailView: UIViewController {
         super.viewDidLoad()
 
     }
-}
+} 

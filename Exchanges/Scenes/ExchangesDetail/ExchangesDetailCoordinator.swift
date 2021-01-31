@@ -10,15 +10,18 @@ import UIKit
 class ExchangesDetailCoordinator: Coordinator {
     weak var navigationController: UINavigationController?
 
-        init(navigationController: UINavigationController) {
-            self.navigationController = navigationController
-        }
+    var selectedRate: Rate
 
-        func start() {
-            let view = ExchangesDetailView()
-            let viewModel = ExchangesDetailViewModel()
-            view.viewModel = viewModel
+    init(navigationController: UINavigationController, rate: Rate) {
+        self.navigationController = navigationController
+        self.selectedRate = rate
+    }
 
-            navigationController?.pushViewController(view, animated: true)
-        }
+    func start() {
+        let view = ExchangesDetailView()
+        let viewModel = ExchangesDetailViewModel(rate: selectedRate)
+        view.viewModel = viewModel
+
+        navigationController?.pushViewController(view, animated: true)
+    }
 }
