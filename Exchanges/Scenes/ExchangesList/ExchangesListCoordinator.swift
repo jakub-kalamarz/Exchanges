@@ -6,9 +6,16 @@
 //
 
 import UIKit
+import Combine
+
+protocol ExchangesFlow {
+    func coordinateToDetail(to currency: Rate)
+}
 
 class ExchangesListCoordinator: Coordinator {
     let navigationController: UINavigationController
+
+    var canncelables = Set<AnyCancellable>()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -18,6 +25,18 @@ class ExchangesListCoordinator: Coordinator {
         let view = ExchangesListView()
         let viewModel = ExchangesListViewModel()
         view.viewModel = viewModel
-        navigationController.pushViewController(view, animated: false)
+        navigationController.pushViewController(view, animated: true)
+
+        viewModel.selectedCurrency.sink(receiveValue: { item in
+            self.coordinateToDetail(to: item)
+        })
+        .store(in: &canncelables)
     }
 }
+
+extension ExchangesListCoordinator: ExchangesFlow {
+        func coordinateToDetail(to currency: Rate) {
+            let coordinator = ExchangesDetailCoordinator(navigationController: navigationController, rate: currency)
+            coordinate(to: coordinator)
+        }
+    }
