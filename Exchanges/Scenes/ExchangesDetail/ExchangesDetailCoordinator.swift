@@ -14,7 +14,7 @@ class ExchangesDetailCoordinator: Coordinator {
 
     init(navigationController: UINavigationController, rate: Rate) {
         self.navigationController = navigationController
-        self.selectedRate = rate
+        selectedRate = rate
     }
 
     func start() {

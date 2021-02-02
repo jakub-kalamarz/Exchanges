@@ -5,10 +5,10 @@
 //  Created by Jakub Kalamarz on 28/01/2021.
 //
 
-import Foundation
 import Combine
+import Foundation
 
-enum ExchangesListViewModelState{
+enum ExchangesListViewModelState {
     case loading
     case finishedLoading
     case error(Error)
@@ -29,7 +29,10 @@ class ExchangesListViewModel {
         self.network = network
 
         getRatesList()
+    }
 
+    func reloadData() {
+        getRatesList()
     }
 
     private func getRatesList() {
@@ -39,7 +42,8 @@ class ExchangesListViewModel {
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { value in
-                var data = value.rates.map { Rate(currency: $0.key, value: $0.value) }
+                let favoritesArray = Defaults.shared.getFavorites()
+                var data = value.rates.map { Rate(currency: $0.key, value: $0.value, isFavorite: favoritesArray.contains($0.key), base: value.base) }
                 data.sort(by: { first, second in
                     first.currency < second.currency
                 })

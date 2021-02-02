@@ -5,24 +5,22 @@
 //  Created by Jakub Kalamarz on 28/01/2021.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 enum Symbol: String {
-    case PLN = "PLN"
-    case USD = "USD"
-    case EUR = "EUR"
-    case GBP = "GBP"
+    case PLN
+    case USD
+    case EUR
+    case GBP
 }
 
 final class ExchangesApi {
-
     static let shared = ExchangesApi()
 
     var urlSession = URLSession.shared
 
     func getRatesList(for base: Symbol = .PLN) -> AnyPublisher<Rates, Error> {
-
         let url = URL(string: "https://api.exchangeratesapi.io/latest?base=\(base)")!
 
         return urlSession.dataTaskPublisher(for: url)

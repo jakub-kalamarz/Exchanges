@@ -20,6 +20,7 @@
 		3B319D6825C33346007F0C75 /* ExchangesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B319D6725C33346007F0C75 /* ExchangesListViewModel.swift */; };
 		3B319D6D25C33383007F0C75 /* ExchangesDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B319D6C25C33383007F0C75 /* ExchangesDetailViewModel.swift */; };
 		3B319D7225C333AB007F0C75 /* ExchangesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B319D7125C333AB007F0C75 /* ExchangesDetailView.swift */; };
+		3B62342B25C8B7E30079BBD6 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B62342A25C8B7E30079BBD6 /* UserDefaults.swift */; };
 		3BD5248525C3370A00BD22DD /* ExchangesListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD5248425C3370A00BD22DD /* ExchangesListCoordinator.swift */; };
 		3BD5248A25C3372700BD22DD /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD5248925C3372700BD22DD /* Coordinator.swift */; };
 		3BD5248F25C338DA00BD22DD /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD5248E25C338DA00BD22DD /* AppCoordinator.swift */; };
@@ -67,6 +68,7 @@
 		3B319D6725C33346007F0C75 /* ExchangesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangesListViewModel.swift; sourceTree = "<group>"; };
 		3B319D6C25C33383007F0C75 /* ExchangesDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangesDetailViewModel.swift; sourceTree = "<group>"; };
 		3B319D7125C333AB007F0C75 /* ExchangesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangesDetailView.swift; sourceTree = "<group>"; };
+		3B62342A25C8B7E30079BBD6 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaults.swift; path = ../../../../Downloads/UserDefaults.swift; sourceTree = "<group>"; };
 		3BD5248425C3370A00BD22DD /* ExchangesListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangesListCoordinator.swift; sourceTree = "<group>"; };
 		3BD5248925C3372700BD22DD /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		3BD5248E25C338DA00BD22DD /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				3B1A775D25C3555100491AE4 /* Rates.swift */,
+				3B62342A25C8B7E30079BBD6 /* UserDefaults.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				3BD5248525C3370A00BD22DD /* ExchangesListCoordinator.swift in Sources */,
 				3BD5248F25C338DA00BD22DD /* AppCoordinator.swift in Sources */,
 				3B319D7225C333AB007F0C75 /* ExchangesDetailView.swift in Sources */,
+				3B62342B25C8B7E30079BBD6 /* UserDefaults.swift in Sources */,
 				3B319D2125C32F6E007F0C75 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

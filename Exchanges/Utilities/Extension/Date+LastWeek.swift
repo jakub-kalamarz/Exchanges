@@ -27,7 +27,7 @@ extension Calendar {
         return formater.string(from: lastDayDate!)
     }
 
-    func getToday(_ format: String = "YYYY-MM-DD") -> String {
+    func getToday(_ format: String = "yyyy-MM-dd") -> String {
         let now = Date()
         let formater = DateFormatter()
         formater.dateFormat = format
@@ -35,18 +35,19 @@ extension Calendar {
         return formater.string(from: now)
     }
 
-    func getDateFromString(string: String, format: String = "YYYY-MM-DD") -> Date? {
+    func getDateFromString(string: String, format: String = "yyyy-MM-dd") -> Date? {
         let formater = DateFormatter()
         formater.dateFormat = format
 
         return formater.date(from: string)
     }
 
-    func getStringFromDate(date: Date, format: String = "DD.MM") -> String {
+    func getStringFromDate(date: Date) -> String {
         let formater = DateFormatter()
-        formater.dateFormat = format
+        formater.dateStyle = .long
+        formater.timeStyle = .none
+        formater.locale = Locale(identifier: "en_GB")
 
         return formater.string(from: date)
     }
-
 }

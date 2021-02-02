@@ -5,8 +5,8 @@
 //  Created by Jakub Kalamarz on 28/01/2021.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 protocol ExchangesFlow {
     func coordinateToDetail(to currency: Rate)
@@ -30,13 +30,13 @@ class ExchangesListCoordinator: Coordinator {
         viewModel.selectedCurrency.sink(receiveValue: { item in
             self.coordinateToDetail(to: item)
         })
-        .store(in: &canncelables)
+            .store(in: &canncelables)
     }
 }
 
 extension ExchangesListCoordinator: ExchangesFlow {
-        func coordinateToDetail(to currency: Rate) {
-            let coordinator = ExchangesDetailCoordinator(navigationController: navigationController, rate: currency)
-            coordinate(to: coordinator)
-        }
+    func coordinateToDetail(to currency: Rate) {
+        let coordinator = ExchangesDetailCoordinator(navigationController: navigationController, rate: currency)
+        coordinate(to: coordinator)
     }
+}

@@ -16,10 +16,11 @@ struct Rate {
     let currency: String
     let value: Double
     var isFavorite: Bool = false
-    var date:Date = Date()
+    var date = Date()
+    var base: String
 }
-
 
 struct CurrencyRates: Codable {
     let rates: [String: [String: Double]]
+    let base: String
 }
