@@ -20,7 +20,9 @@ final class ExchangesApi {
 
     var urlSession = URLSession.shared
 
-    func getRatesList(for base: Symbol = .PLN) -> AnyPublisher<Rates, Error> {
+    func getRatesList() -> AnyPublisher<Rates, Error> {
+        let base = Defaults.shared.getBase()
+
         let url = URL(string: "https://api.exchangeratesapi.io/latest?base=\(base)")!
 
         return urlSession.dataTaskPublisher(for: url)
@@ -29,9 +31,10 @@ final class ExchangesApi {
             .eraseToAnyPublisher()
     }
 
-    func getRatesPeriod(symbol: String, base: Symbol = .PLN) -> AnyPublisher<CurrencyRates, Error> {
+    func getRatesPeriod(symbol: String) -> AnyPublisher<CurrencyRates, Error> {
         let today = Calendar.current.getToday()
         let lastWeekMonday = Calendar.current.getLastWeekDay()
+        let base = Defaults.shared.getBase()
 
         let url = URL(string: "https://api.exchangeratesapi.io/history?start_at=\(lastWeekMonday)&end_at=\(today)&symbols=\(symbol)&base=\(base)")!
 

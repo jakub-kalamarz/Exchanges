@@ -45,13 +45,17 @@ class ExchangesDetailViewModel {
                 print(error)
             }, receiveValue: { value in
                 let favoritesArray = Defaults.shared.getFavorites()
-                self.data = value.rates.map { data in
+                var data = value.rates.map { data -> Rate in
                     let date = Calendar.current.getDateFromString(string: data.key)!
                     let rate = data.value.values.first!
                     let base = value.base
                     let symbol = data.value.keys.first!
                     return Rate(currency: symbol, value: rate, isFavorite: favoritesArray.contains(symbol), date: date, base: base)
                 }
+                data.sort(by: { first, second in
+                    first.date < second.date
+                })
+                self.data = data
             })
             .store(in: &canncelables)
     }

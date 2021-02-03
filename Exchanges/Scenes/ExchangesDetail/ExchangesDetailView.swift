@@ -35,6 +35,7 @@ extension ExchangesDetailView {
         view.backgroundColor = .systemBackground
 
         tableView = UITableView(frame: view.bounds, style: .insetGrouped)
+        tableView.allowsSelection = false
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
