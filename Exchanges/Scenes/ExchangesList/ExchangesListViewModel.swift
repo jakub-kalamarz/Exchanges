@@ -43,7 +43,11 @@ class ExchangesListViewModel {
                 print(error)
             }, receiveValue: { value in
                 let favoritesArray = Defaults.shared.getFavorites()
-                var data = value.rates.map { Rate(currency: $0.key, value: $0.value, isFavorite: favoritesArray.contains($0.key), base: value.base) }
+                var data = value.rates.map { data -> Rate in
+                    let currency = data.key
+                    let rate = data.value
+                    let base = value.base
+                    return Rate(currency: currency, value: rate, isFavorite: favoritesArray.contains(currency), base: base) }
                 data.sort(by: { first, second in
                     first.currency < second.currency
                 })
