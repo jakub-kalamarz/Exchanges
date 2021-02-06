@@ -21,7 +21,15 @@ class ExchangesListViewModel {
     @Published var data = [Rate]()
     @Published var state: ExchangesListViewModelState = .loading
 
+    lazy var currencySorted: [Rate] = {
+        self.data.sorted(by: { first, second in
+            first.currency < second.currency
+        })
+    }()
+
     var selectedCurrency = PassthroughSubject<Rate, Never>()
+    var chooseBase = PassthroughSubject<Void, Never>()
+    var selectedBase = PassthroughSubject<String, Never>()
 
     private var canncelables = Set<AnyCancellable>()
 
@@ -29,6 +37,12 @@ class ExchangesListViewModel {
         self.network = network
 
         getRatesList()
+
+        selectedBase.sink(receiveValue: { value in
+            Defaults.shared.setBase(base: value)
+            self.reloadData()
+        })
+        .store(in: &canncelables)
     }
 
     func reloadData() {

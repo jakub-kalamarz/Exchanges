@@ -38,8 +38,14 @@ extension ExchangesListView {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.tableView.reloadData()
+                self?.navigationItem.rightBarButtonItem?.isEnabled = true
             })
             .store(in: &canncelables)
+
+        viewModel.chooseBase.sink(receiveValue: { [weak self] _ in
+            self?.showBaseChooser()
+        })
+        .store(in: &canncelables)
     }
 }
 
@@ -62,6 +68,13 @@ extension ExchangesListView {
     private func setupNavigation() {
         navigationController?.navigationBar.prefersLargeTitles = true
         title = viewModel.title
+        let chooseBaseButton = UIBarButtonItem(image: UIImage(systemName: "dollarsign.square"), style: .plain, target: self, action: #selector(chooseBase))
+        chooseBaseButton.isEnabled = false
+        navigationItem.rightBarButtonItem = chooseBaseButton
+    }
+
+    @objc func chooseBase() {
+        viewModel.chooseBase.send()
     }
 }
 
@@ -92,5 +105,67 @@ extension ExchangesListView: UITableViewDelegate, UITableViewDataSource {
         cell.detailTextLabel?.text = String(format: "%.3f", data.value)
         cell.accessoryView = data.isFavorite ? UIImageView(image: UIImage(systemName: "heart.fill")?.withTintColor(.red)) : UIImageView(image: UIImage(systemName: "heart"))
         return cell
+    }
+}
+
+//MARK:: Base Pick Methods
+extension ExchangesListView: UIPickerViewDelegate, UIPickerViewDataSource  {
+
+    private func showBaseChooser() {
+
+        let vc = UIViewController()
+
+        let pickerView = UIView()
+        pickerView.translatesAutoresizingMaskIntoConstraints = false
+        pickerView.backgroundColor = .systemBackground
+        pickerView.layer.cornerRadius = 12
+        pickerView.layer.masksToBounds = true
+
+        let picker = UIPickerView()
+        picker.delegate = self
+        picker.dataSource = self
+        picker.translatesAutoresizingMaskIntoConstraints = false
+
+        vc.view.addSubview(pickerView)
+        pickerView.addSubview(picker)
+
+        NSLayoutConstraint.activate([
+            pickerView.leadingAnchor.constraint(equalTo: vc.view.safeAreaLayoutGuide.leadingAnchor),
+            pickerView.trailingAnchor.constraint(equalTo: vc.view.safeAreaLayoutGuide.trailingAnchor),
+            pickerView.bottomAnchor.constraint(equalTo: vc.view.bottomAnchor),
+            picker.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
+            picker.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor),
+            picker.bottomAnchor.constraint(equalTo: vc.view.safeAreaLayoutGuide.bottomAnchor),
+            picker.heightAnchor.constraint(equalTo: pickerView.heightAnchor)
+        ])
+
+        navigationController?.present(vc, animated: true, completion: { [weak self] in 
+            let base = Defaults.shared.getBase()
+            let baseRow = self?.viewModel.currencySorted.firstIndex(where: { $0.currency == base }) ?? 0
+            picker.selectRow(baseRow, inComponent: 0, animated: true)
+        })
+    }
+
+    @objc
+    private func hideBaseChooser() {
+        print("xd")
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return viewModel.currencySorted.count
+    }
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let data = viewModel.currencySorted[row]
+        return data.currency
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let data = viewModel.currencySorted[row]
+        viewModel.selectedBase.send(data.currency)
     }
 }
