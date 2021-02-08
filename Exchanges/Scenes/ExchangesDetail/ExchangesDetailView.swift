@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SnapKit
 import UIKit
 
 class ExchangesDetailView: UIViewController {
@@ -106,10 +107,19 @@ extension ExchangesDetailView: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
+    func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 0:
+            return 200
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            return UITableViewCell(style: .default, reuseIdentifier: "cellChart")
+            return configureChartCell()
         case 1:
             return configureInfoCell()
         case 2:
@@ -131,6 +141,16 @@ extension ExchangesDetailView: UITableViewDelegate, UITableViewDataSource {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cellInfo")
         cell.textLabel?.text = "Base:"
         cell.detailTextLabel?.text = viewModel.base
+        return cell
+    }
+
+    private func configureChartCell() -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "chartCell")
+        let chart = ChartView(data: viewModel.data)
+        cell.contentView.addSubview(chart)
+        chart.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         return cell
     }
 }

@@ -5,7 +5,9 @@ target 'Exchanges' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   # Pods for Exchanges
-
+  pod "SwiftChart"
+  pod 'SnapKit', '~> 5.0.0'
+  
   target 'ExchangesTests' do
     inherit! :search_paths
     # Pods for testing

@@ -42,7 +42,7 @@ class ExchangesListViewModel {
             Defaults.shared.setBase(base: value)
             self.reloadData()
         })
-        .store(in: &canncelables)
+            .store(in: &canncelables)
     }
 
     func reloadData() {
@@ -61,7 +61,8 @@ class ExchangesListViewModel {
                     let currency = data.key
                     let rate = data.value
                     let base = value.base
-                    return Rate(currency: currency, value: rate, isFavorite: favoritesArray.contains(currency), base: base) }
+                    return Rate(currency: currency, value: rate, isFavorite: favoritesArray.contains(currency), base: base)
+                }
                 data.sort(by: { first, second in
                     first.currency < second.currency
                 })

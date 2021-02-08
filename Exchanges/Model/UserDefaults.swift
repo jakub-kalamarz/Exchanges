@@ -15,7 +15,9 @@ final class Defaults {
     private let keyBase = "base"
     private let defaultBase = "PLN"
 }
-//MARK:: Favorites methods
+
+// MARK: Favorites methods
+
 extension Defaults {
     func getFavorites() -> [String] {
         if let favorites = userDefaults.array(forKey: keyFavorites) as? [String] {
@@ -37,7 +39,8 @@ extension Defaults {
     }
 }
 
-//MARK:: Base methods
+// MARK: Base methods
+
 extension Defaults {
     func getBase() -> String {
         if let base = userDefaults.string(forKey: keyBase) {

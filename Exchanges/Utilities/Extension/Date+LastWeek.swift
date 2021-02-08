@@ -8,23 +8,19 @@
 import Foundation
 
 extension Calendar {
-    func getLastWeekDay(_ format: String = "YYYY-MM-DD", dayOfWeek: Int = 2) -> String {
+    func getLastWeekDay(_ format: String = "yyyy-MM-dd", dayOfWeek _: Int = 2) -> String {
         let now = Date()
         let formater = DateFormatter()
         formater.dateFormat = format
 
-        var lastDay = Calendar.current.dateComponents([.weekOfYear, .year], from: now)
-        if lastDay.weekOfYear == 1 {
-            lastDay.year! -= 1
-            lastDay.weekOfYear = 1
-        } else {
-            lastDay.weekOfYear! -= 1
+        var components = Calendar.current.dateComponents([.weekOfYear, .year], from: now)
+        if let week = components.weekOfYear {
+            components.weekOfYear = week - 2
         }
 
-        lastDay.weekday = dayOfWeek
-        let lastDayDate = date(from: lastDay)
+        let componentsDate = Calendar.current.nextDate(after: now, matching: components, matchingPolicy: .strict, repeatedTimePolicy: .first, direction: .backward)
 
-        return formater.string(from: lastDayDate!)
+        return formater.string(from: componentsDate ?? Date())
     }
 
     func getToday(_ format: String = "yyyy-MM-dd") -> String {
@@ -47,6 +43,13 @@ extension Calendar {
         formater.dateStyle = .long
         formater.timeStyle = .none
         formater.locale = Locale(identifier: "en_GB")
+
+        return formater.string(from: date)
+    }
+
+    func getShortStringFromDate(date: Date) -> String {
+        let formater = DateFormatter()
+        formater.dateFormat = "d.MM"
 
         return formater.string(from: date)
     }

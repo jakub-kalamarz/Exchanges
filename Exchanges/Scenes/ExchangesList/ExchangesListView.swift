@@ -45,7 +45,7 @@ extension ExchangesListView {
         viewModel.chooseBase.sink(receiveValue: { [weak self] _ in
             self?.showBaseChooser()
         })
-        .store(in: &canncelables)
+            .store(in: &canncelables)
     }
 }
 
@@ -108,11 +108,10 @@ extension ExchangesListView: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK:: Base Pick Methods
-extension ExchangesListView: UIPickerViewDelegate, UIPickerViewDataSource  {
+// MARK: Base Pick Methods
 
+extension ExchangesListView: UIPickerViewDelegate, UIPickerViewDataSource {
     private func showBaseChooser() {
-
         let vc = UIViewController()
 
         let pickerView = UIView()
@@ -136,10 +135,10 @@ extension ExchangesListView: UIPickerViewDelegate, UIPickerViewDataSource  {
             picker.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
             picker.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor),
             picker.bottomAnchor.constraint(equalTo: vc.view.safeAreaLayoutGuide.bottomAnchor),
-            picker.heightAnchor.constraint(equalTo: pickerView.heightAnchor)
+            picker.heightAnchor.constraint(equalTo: pickerView.heightAnchor),
         ])
 
-        navigationController?.present(vc, animated: true, completion: { [weak self] in 
+        navigationController?.present(vc, animated: true, completion: { [weak self] in
             let base = Defaults.shared.getBase()
             let baseRow = self?.viewModel.currencySorted.firstIndex(where: { $0.currency == base }) ?? 0
             picker.selectRow(baseRow, inComponent: 0, animated: true)
@@ -151,20 +150,20 @@ extension ExchangesListView: UIPickerViewDelegate, UIPickerViewDataSource  {
         print("xd")
     }
 
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_: UIPickerView, numberOfRowsInComponent _: Int) -> Int {
         return viewModel.currencySorted.count
     }
 
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in _: UIPickerView) -> Int {
         1
     }
 
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_: UIPickerView, titleForRow row: Int, forComponent _: Int) -> String? {
         let data = viewModel.currencySorted[row]
         return data.currency
     }
 
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_: UIPickerView, didSelectRow row: Int, inComponent _: Int) {
         let data = viewModel.currencySorted[row]
         viewModel.selectedBase.send(data.currency)
     }

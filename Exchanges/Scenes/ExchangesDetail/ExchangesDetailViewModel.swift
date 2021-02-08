@@ -25,9 +25,9 @@ class ExchangesDetailViewModel {
     }
 
     init(network: ExchangesApi = ExchangesApi(), rate: Rate) {
-        self.symbol = rate.currency
-        self.isFavorite = rate.isFavorite
-        self.base = rate.base
+        symbol = rate.currency
+        isFavorite = rate.isFavorite
+        base = rate.base
         self.network = network
 
         markAsFavorite.sink(receiveValue: { [self] _ in
